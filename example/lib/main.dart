@@ -55,6 +55,13 @@ class _MyAppState extends State<MyApp> {
                     }
                   },
                   downloadUrl: "www.360.com",
+                  customFullUri: (s, a, p) {
+                    return buildFullUri(
+                      scheme: s,
+                      action: a,
+                      params: p,
+                    );
+                  },
                 );
               },
               child: Text('获取token登录'),
@@ -64,4 +71,16 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+String buildFullUri({
+  String scheme,
+  String action,
+  Map<String, dynamic> params,
+}) {
+  if (null == scheme) throw Exception("scheme is null!");
+  if (null == action) throw Exception("action is null!");
+  params?.addAll({"aciton": action});
+  return Uri.encodeFull(
+      "${scheme.contains("://") ? scheme : "$scheme://do"}?params1=${jsonEncode(params)}");
 }

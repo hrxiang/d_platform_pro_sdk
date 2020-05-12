@@ -27,9 +27,12 @@ class DPlatformProSdk {
     String iosBundleId,
     String downloadUrl,
     Map<String, dynamic> params = const <String, dynamic>{},
+    CustomFullUri customFullUri,
   }) async {
     _channel.invokeMethod("call", {
-      "uri": buildFullUri(scheme: scheme, action: action, params: params),
+      "uri": null != customFullUri
+          ? customFullUri(scheme, action, params)
+          : buildFullUri(scheme: scheme, action: action, params: params),
       // 被唤起的应用的scheme
       "action": action,
       // 事件类型
@@ -42,6 +45,12 @@ class DPlatformProSdk {
     });
   }
 }
+
+typedef CustomFullUri = String Function(
+  String scheme,
+  String action,
+  Map<String, dynamic> params,
+);
 
 String buildFullUri({
   String scheme,
