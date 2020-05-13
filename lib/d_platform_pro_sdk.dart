@@ -59,7 +59,7 @@ String buildFullUri({
 }) {
   if (null == scheme) throw Exception("scheme is null!");
   if (null == action) throw Exception("action is null!");
-  params?.addAll({"aciton": action});
+  params?.addAll({"action": action});
   return Uri.encodeFull(
       "${scheme.contains("://") ? scheme : "$scheme://do"}?commonSdkParams=${jsonEncode(params)}");
 }
